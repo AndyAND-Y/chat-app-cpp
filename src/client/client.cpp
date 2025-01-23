@@ -3,7 +3,7 @@
 #include <thread>
 #include <cstring>
 #include <common/constants.h>
-#include <common/socket_utils.h>
+#include <common/socket.h>
 
 void receiveMessages(int sockfd)
 {

@@ -1,5 +1,5 @@
-#ifndef SOCKET_UTILS_H
-#define SOCKET_UTILS_H
+#ifndef SOCKET_H
+#define SOCKET_H
 
 #pragma once
 
