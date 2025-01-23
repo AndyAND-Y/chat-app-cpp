@@ -28,3 +28,5 @@
 8. Presence System
     - [ ] Typing detection and broadcast
     - [ ] Displaying status ("User1 is typing...")
+9. Event Driven Operations (Potential)
+    - [ ] implement multiplexing and async
