@@ -1,34 +1,42 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Set project name
 project(NetworkApp)
 
-# Specify C++ standard
 set(CMAKE_CXX_STANDARD 20)
 
-# Add include directories for all sources
+# Include the src directory for headers
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-# Add the common source files that are shared by both the client and server
-set(COMMON_SOURCES
-    src/common/socket_utils.cpp
-)
+# Automatically include all source files from src/common
+file(GLOB_RECURSE  COMMON_SOURCES ${CMAKE_SOURCE_DIR}/src/common/*.cpp)
+file(GLOB_RECURSE  SERVER_SOURCES ${CMAKE_SOURCE_DIR}/src/server/*.cpp)
+file(GLOB_RECURSE  CLIENT_SOURCES ${CMAKE_SOURCE_DIR}/src/client/*.cpp)
 
-# Set the output directory for executables
+
+# Set output directory for the executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
-# Add executable for client
+message(STATUS "COMMON_SOURCES: ${COMMON_SOURCES}")
+
+
+# Add the client executable
 add_executable(client
-    src/client/client.cpp
+    
     ${COMMON_SOURCES}
+    ${CLIENT_SOURCES}
 )
 
-# Add executable for server
+# Add the server executable
 add_executable(server
-    src/server/server.cpp
+    
     ${COMMON_SOURCES}
+    ${SERVER_SOURCES}
 )
 
-# Link with the necessary library (in this case ws2_32)
+# Link libraries
 target_link_libraries(client PRIVATE ws2_32)
 target_link_libraries(server PRIVATE ws2_32)
+
+# Optionally, you could add the headers to target's include directories if needed
+target_include_directories(client PRIVATE ${CMAKE_SOURCE_DIR}/src/common)
+target_include_directories(server PRIVATE ${CMAKE_SOURCE_DIR}/src/common)

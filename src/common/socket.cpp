@@ -10,12 +10,12 @@ void cleanup()
 void cleanup() {}
 #endif
 
-void closeSocket(int socket_fd)
+void closeSocket( int socket_fd )
 {
 #ifdef _WIN32
-    closesocket(socket_fd);
+    closesocket( socket_fd );
 #else
-    close(socket_fd);
+    close( socket_fd );
 #endif
     cleanup();
 }

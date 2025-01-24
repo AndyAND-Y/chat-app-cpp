@@ -14,6 +14,6 @@
 #endif
 
 void cleanup();
-void closeSocket(int socket_fd);
+void closeSocket( int socket_fd );
 
 #endif

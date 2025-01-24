@@ -44,19 +44,33 @@ cmake_ninja_workdir = C$:/Users/Andy/Desktop/CODE/chat-app-cpp/build/
 
 build cmake_object_order_depends_target_client: phony || .
 
+build CMakeFiles/client.dir/src/common/models/Client.cpp.obj: CXX_COMPILER__client_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/models/Client.cpp || cmake_object_order_depends_target_client
+  DEP_FILE = CMakeFiles\client.dir\src\common\models\Client.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\client.dir
+  OBJECT_FILE_DIR = CMakeFiles\client.dir\src\common\models
+
+build CMakeFiles/client.dir/src/common/models/Message.cpp.obj: CXX_COMPILER__client_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/models/Message.cpp || cmake_object_order_depends_target_client
+  DEP_FILE = CMakeFiles\client.dir\src\common\models\Message.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\client.dir
+  OBJECT_FILE_DIR = CMakeFiles\client.dir\src\common\models
+
+build CMakeFiles/client.dir/src/common/socket.cpp.obj: CXX_COMPILER__client_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/socket.cpp || cmake_object_order_depends_target_client
+  DEP_FILE = CMakeFiles\client.dir\src\common\socket.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\client.dir
+  OBJECT_FILE_DIR = CMakeFiles\client.dir\src\common
+
 build CMakeFiles/client.dir/src/client/client.cpp.obj: CXX_COMPILER__client_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/client/client.cpp || cmake_object_order_depends_target_client
   DEP_FILE = CMakeFiles\client.dir\src\client\client.cpp.obj.d
   FLAGS = -std=gnu++20
-  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
   OBJECT_DIR = CMakeFiles\client.dir
   OBJECT_FILE_DIR = CMakeFiles\client.dir\src\client
-
-build CMakeFiles/client.dir/src/common/socket_utils.cpp.obj: CXX_COMPILER__client_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/socket_utils.cpp || cmake_object_order_depends_target_client
-  DEP_FILE = CMakeFiles\client.dir\src\common\socket_utils.cpp.obj.d
-  FLAGS = -std=gnu++20
-  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src
-  OBJECT_DIR = CMakeFiles\client.dir
-  OBJECT_FILE_DIR = CMakeFiles\client.dir\src\common
 
 
 # =============================================================================
@@ -66,7 +80,7 @@ build CMakeFiles/client.dir/src/common/socket_utils.cpp.obj: CXX_COMPILER__clien
 #############################################
 # Link the executable out\client.exe
 
-build out/client.exe: CXX_EXECUTABLE_LINKER__client_ CMakeFiles/client.dir/src/client/client.cpp.obj CMakeFiles/client.dir/src/common/socket_utils.cpp.obj
+build out/client.exe: CXX_EXECUTABLE_LINKER__client_ CMakeFiles/client.dir/src/common/models/Client.cpp.obj CMakeFiles/client.dir/src/common/models/Message.cpp.obj CMakeFiles/client.dir/src/common/socket.cpp.obj CMakeFiles/client.dir/src/client/client.cpp.obj
   LINK_LIBRARIES = -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\client.dir
   POST_BUILD = cd .
@@ -84,19 +98,40 @@ build out/client.exe: CXX_EXECUTABLE_LINKER__client_ CMakeFiles/client.dir/src/c
 
 build cmake_object_order_depends_target_server: phony || .
 
-build CMakeFiles/server.dir/src/server/server.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/server/server.cpp || cmake_object_order_depends_target_server
-  DEP_FILE = CMakeFiles\server.dir\src\server\server.cpp.obj.d
+build CMakeFiles/server.dir/src/common/models/Client.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/models/Client.cpp || cmake_object_order_depends_target_server
+  DEP_FILE = CMakeFiles\server.dir\src\common\models\Client.cpp.obj.d
   FLAGS = -std=gnu++20
-  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\server.dir
+  OBJECT_FILE_DIR = CMakeFiles\server.dir\src\common\models
+
+build CMakeFiles/server.dir/src/common/models/Message.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/models/Message.cpp || cmake_object_order_depends_target_server
+  DEP_FILE = CMakeFiles\server.dir\src\common\models\Message.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\server.dir
+  OBJECT_FILE_DIR = CMakeFiles\server.dir\src\common\models
+
+build CMakeFiles/server.dir/src/common/socket.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/socket.cpp || cmake_object_order_depends_target_server
+  DEP_FILE = CMakeFiles\server.dir\src\common\socket.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
+  OBJECT_DIR = CMakeFiles\server.dir
+  OBJECT_FILE_DIR = CMakeFiles\server.dir\src\common
+
+build CMakeFiles/server.dir/src/server/handleClient.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/server/handleClient.cpp || cmake_object_order_depends_target_server
+  DEP_FILE = CMakeFiles\server.dir\src\server\handleClient.cpp.obj.d
+  FLAGS = -std=gnu++20
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
   OBJECT_DIR = CMakeFiles\server.dir
   OBJECT_FILE_DIR = CMakeFiles\server.dir\src\server
 
-build CMakeFiles/server.dir/src/common/socket_utils.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common/socket_utils.cpp || cmake_object_order_depends_target_server
-  DEP_FILE = CMakeFiles\server.dir\src\common\socket_utils.cpp.obj.d
+build CMakeFiles/server.dir/src/server/server.cpp.obj: CXX_COMPILER__server_unscanned_ C$:/Users/Andy/Desktop/CODE/chat-app-cpp/src/server/server.cpp || cmake_object_order_depends_target_server
+  DEP_FILE = CMakeFiles\server.dir\src\server\server.cpp.obj.d
   FLAGS = -std=gnu++20
-  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src
+  INCLUDES = -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src -IC:/Users/Andy/Desktop/CODE/chat-app-cpp/src/common
   OBJECT_DIR = CMakeFiles\server.dir
-  OBJECT_FILE_DIR = CMakeFiles\server.dir\src\common
+  OBJECT_FILE_DIR = CMakeFiles\server.dir\src\server
 
 
 # =============================================================================
@@ -106,7 +141,7 @@ build CMakeFiles/server.dir/src/common/socket_utils.cpp.obj: CXX_COMPILER__serve
 #############################################
 # Link the executable out\server.exe
 
-build out/server.exe: CXX_EXECUTABLE_LINKER__server_ CMakeFiles/server.dir/src/server/server.cpp.obj CMakeFiles/server.dir/src/common/socket_utils.cpp.obj
+build out/server.exe: CXX_EXECUTABLE_LINKER__server_ CMakeFiles/server.dir/src/common/models/Client.cpp.obj CMakeFiles/server.dir/src/common/models/Message.cpp.obj CMakeFiles/server.dir/src/common/socket.cpp.obj CMakeFiles/server.dir/src/server/handleClient.cpp.obj CMakeFiles/server.dir/src/server/server.cpp.obj
   LINK_LIBRARIES = -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\server.dir
   POST_BUILD = cd .
