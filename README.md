@@ -7,9 +7,9 @@
     - [x] Setup client
     - [x] Implement basic message sending
 2. Multi client support (1 thread per client)
-    - [ ] Message Broadcasting
+    - [x] Message Broadcasting
     - [ ] List of threads for cleanup
-    - [ ] Handle client per thread
+    - [x] Handle client per thread
 3. Simple User Auth
     - [ ] User registration
     - [ ] User login
@@ -29,4 +29,6 @@
     - [ ] Typing detection and broadcast
     - [ ] Displaying status ("User1 is typing...")
 9. Event Driven Operations (Potential)
-    - [ ] implement multiplexing and async
+    - [ ] Implement multiplexing and async
+10. Testing
+    - [ ] Automated testing for features
