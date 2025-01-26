@@ -16,6 +16,55 @@ public:
         : host_( host ), port_( port ) {
     }
 
+    void close_client_connetion( int client_fd ) {
+        std::array<char, 2048> buffer;
+
+        std::cout << "Closing connection for client " << client_fd << '\n';
+        CLOSE_SOCKET( client_fd );
+
+        {
+            std::lock_guard<std::mutex> lock( clients_mutex_ );
+
+            /* Delete from clients list */
+            clients_.erase(
+                std::remove_if(
+                    clients_.begin(),
+                    clients_.end(),
+                    [client_fd]( int client_id )
+                    {
+                        return client_id == client_fd;
+                    }
+                )
+            );
+
+            /* Debug list with all clients */
+            std::cout << "Clients: ";
+            for (auto client : clients_) {
+                std::cout << client << ", ";
+            }
+
+            std::cout << '\n';
+
+            /* Send disconnect update */
+
+            auto now = std::chrono::system_clock::now();
+            std::time_t current_time = std::chrono::system_clock::to_time_t( now );
+
+            std::string content = "User disconected!";
+
+            Message serverMessage( 0, 0, current_time, content );
+
+            serverMessage.serialize( buffer );
+
+            for (int client : clients_) {
+                send( client, buffer.data(), buffer.size(), 0 );
+                std::cout << client_fd << " -> " << client << '\n';
+            }
+
+        }
+
+    }
+
     void start() {
         std::cout << "Server starting...\n";
         INIT_SOCKET();
@@ -82,6 +131,8 @@ public:
 
 private:
 
+
+
     void handle_client( int client_fd ) {
 
         std::array<char, 2048> buffer;
@@ -110,43 +161,9 @@ private:
 
         }
 
-        {
-            std::lock_guard<std::mutex> lock( clients_mutex_ );
-            clients_.erase(
-                std::remove_if(
-                    clients_.begin(),
-                    clients_.end(),
-                    [client_fd]( int client_id )
-                    {
-                        return client_id == client_fd;
-                    } ) );
-
-            CLOSE_SOCKET( client_fd );
-
-            std::cout << "Clients: ";
-            for (auto client : clients_) {
-                std::cout << client << ", ";
-            }
-
-            std::cout << '\n';
-
-            auto now = std::chrono::system_clock::now();
-            std::time_t current_time = std::chrono::system_clock::to_time_t( now );
-
-            std::string content = "User disconected!";
-
-            Message serverMessage( 0, 0, current_time, content );
-
-            serverMessage.serialize( buffer );
-
-            for (int client : clients_) {
-                send( client, buffer.data(), buffer.size(), 0 );
-                std::cout << client_fd << " -> " << client << '\n';
-            }
-
-        }
-
+        TCPServer::close_client_connetion( client_fd );
     }
+
 
     std::string host_;
     short port_;
