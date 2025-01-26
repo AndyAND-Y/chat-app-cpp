@@ -8,7 +8,7 @@
     - [x] Implement basic message sending
 2. Multi client support (1 thread per client)
     - [x] Message Broadcasting
-    - [ ] List of threads for cleanup
+    - [x] List of clients for cleanup
     - [x] Handle client per thread
 3. Simple User Auth
     - [ ] User registration
