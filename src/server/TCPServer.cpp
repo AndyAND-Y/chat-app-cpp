@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <array>
-#include <common/models/Message.h>
+#include <common/models/message/Messages.h>
 #include <ctime>
 
 class TCPServer {
@@ -52,7 +52,7 @@ public:
 
             std::string content = "User disconected!";
 
-            Message serverMessage( 0, 0, current_time, content );
+            ChatMessage serverMessage( 0, 0, current_time, content );
 
             serverMessage.serialize( buffer );
 
@@ -146,8 +146,6 @@ private:
                 std::cout << "Connection closed by the user\n";
                 break;
             }
-
-            Message msg( Message::deserialize( buffer ) );
 
             {
                 std::lock_guard<std::mutex> lock( clients_mutex_ );

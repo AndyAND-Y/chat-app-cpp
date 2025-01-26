@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <array>
-#include <common/models/Message.h>
+#include <common/models/message/Messages.h>
 #include <iomanip>
 #include <ctime>
 
@@ -19,30 +19,14 @@ public:
     }
 
     void start() {
-        INIT_SOCKET();
 
-        int client_fd = createTCPIpv4Socket();
+        connect_to_server();
 
-        if (client_fd < 0) {
-            std::cerr << "Error creating socket\n";
-        }
-
-        sockaddr_in server_address = createIpv4Address( host_, port_ );
-
-        int result_connect = connect( client_fd, reinterpret_cast<sockaddr*>( &server_address ), sizeof( server_address ) );
-
-        if (result_connect < 0) {
-            std::cerr << "Error connecting to server\n";
-            return;
-        }
-
-
-        std::array<char, 2048> buffer;
         std::string input;
 
         std::thread(
             [&]() {
-                TCPClient::handleIncomingMessages( client_fd );
+                TCPClient::handleIncomingMessages();
             }
         ).detach();
 
@@ -55,41 +39,68 @@ public:
             auto now = std::chrono::system_clock::now();
             std::time_t current_time = std::chrono::system_clock::to_time_t( now );
 
-            Message msg( user_id, 0, current_time, input );
+            ChatMessage msg( user_id, 0, current_time, input );
 
-            msg.serialize( buffer );
-
-            send( client_fd, buffer.data(), buffer.size(), 0 );
+            send_message( msg );
         }
 
-        CLOSE_SOCKET( client_fd );
+        disconnect_from_server();
+    }
+
+    void connect_to_server() {
+        INIT_SOCKET();
+
+        client_fd_ = createTCPIpv4Socket();
+
+        if (client_fd_ < 0) {
+            std::cerr << "Error creating socket\n";
+        }
+
+        sockaddr_in server_address = createIpv4Address( host_, port_ );
+
+        int result_connect = connect( client_fd_, reinterpret_cast<sockaddr*>( &server_address ), sizeof( server_address ) );
+
+        if (result_connect < 0) {
+            std::cerr << "Error connecting to server\n";
+            return;
+        }
+    }
+
+    void disconnect_from_server() {
+        CLOSE_SOCKET( client_fd_ );
         CLEANUP_SOCKET();
+        client_fd_ = -1;
+    }
+
+    void send_message( const Message& msg ) {
+        std::array<char, 2048> buffer;
+        msg.serialize( buffer );
+        send( client_fd_, buffer.data(), buffer.size(), 0 );
     }
 
 private:
 
-    void handleIncomingMessages( int client_fd ) {
+    void handleIncomingMessages() {
 
         std::array<char, 2048> buffer;
 
         while (true) {
 
-            ssize_t bytes_received = recv( client_fd, buffer.data(), buffer.size(), 0 );
+            ssize_t bytes_received = recv( client_fd_, buffer.data(), buffer.size(), 0 );
 
             if (bytes_received < 0) {
                 std::cout << "Connection close by the server\n";
                 break;
             }
 
-            Message msg( Message::deserialize( buffer ) );
+            ChatMessage msg( ChatMessage::deserialize( buffer ) );
 
-            std::tm* localtime = std::localtime( &msg.time );
-
-            std::cout << std::put_time( localtime, "%d-%m-%y %H:%M:%S" ) << " " << msg.sender_id << ":" << msg.content << '\n';
+            std::cout << msg.to_string();
         }
 
     }
 
+    int client_fd_;
     std::string host_;
     short port_;
 };
