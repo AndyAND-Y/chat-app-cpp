@@ -1,21 +1,17 @@
 #include "socket.h"
-#include <iostream>
+#include <string>
 
-#ifdef _WIN32
-void cleanup()
-{
-    WSACleanup();
+
+int createTCPIpv4Socket() {
+    return socket( AF_INET, SOCK_STREAM, 0 );
 }
-#else
-void cleanup() {}
-#endif
 
-void closeSocket( int socket_fd )
-{
-#ifdef _WIN32
-    closesocket( socket_fd );
-#else
-    close( socket_fd );
-#endif
-    cleanup();
+sockaddr_in createIpv4Address( std::string host, short port ) {
+
+    sockaddr_in server_addr{};
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons( port );
+    inet_pton( AF_INET, host.c_str(), &server_addr.sin_addr );
+
+    return server_addr;
 }

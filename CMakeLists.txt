@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(NetworkApp)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 # Include the src directory for headers
 include_directories(${CMAKE_SOURCE_DIR}/src)

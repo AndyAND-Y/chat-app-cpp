@@ -1,15 +1,14 @@
 #include "Message.h"
+#include <iostream>
 
-// Constructor to initialize a Message object
-Message::Message( int sender_id, int chat_id, std::time_t time, const std::string& message )
-    : sender_id( sender_id ), chat_id( chat_id ), time( time ), message( message ) {
+Message::Message( int sender_id, int chat_id, std::time_t time, const std::string& content )
+    : sender_id( sender_id ), chat_id( chat_id ), time( time ), content( content ) {
 }
 
-void Message::serialize( std::array<char, 2048>& buffer ) const /// const here means it cannot modify the struct 
+void Message::serialize( std::array<char, 2048>& buffer ) const // const here means it cannot modify the struct 
 {
-    // Copy sender_id and chat_id
     int offset = 0;
-    size_t message_length = message.size();
+    size_t content_length = content.size();
 
     std::memcpy( buffer.data() + offset, &sender_id, sizeof( sender_id ) );
     offset += sizeof( sender_id );
@@ -20,10 +19,10 @@ void Message::serialize( std::array<char, 2048>& buffer ) const /// const here m
     std::memcpy( buffer.data() + offset, &time, sizeof( time ) );
     offset += sizeof( time );
 
-    std::memcpy( buffer.data() + offset, &message_length, sizeof( message_length ) );
-    offset += sizeof( message_length );
+    std::memcpy( buffer.data() + offset, &content_length, sizeof( content_length ) );
+    offset += sizeof( content_length );
 
-    std::memcpy( buffer.data() + offset, message.c_str(), message_length );
+    std::memcpy( buffer.data() + offset, content.c_str(), content_length );
 }
 
 Message Message::deserialize( const std::array<char, 2048>& buffer )
@@ -31,7 +30,7 @@ Message Message::deserialize( const std::array<char, 2048>& buffer )
     int sender_id;
     int chat_id;
     std::time_t time;
-    size_t message_length;
+    size_t content_length;
 
     int offset = 0;
 
@@ -44,10 +43,10 @@ Message Message::deserialize( const std::array<char, 2048>& buffer )
     std::memcpy( &time, buffer.data() + offset, sizeof( time ) );
     offset += sizeof( time );
 
-    std::memcpy( &message_length, buffer.data() + offset, sizeof( message_length ) );
-    offset += sizeof( message_length );
+    std::memcpy( &content_length, buffer.data() + offset, sizeof( content_length ) );
+    offset += sizeof( content_length );
 
-    std::string message( buffer.data() + offset, message_length );
+    std::string content( buffer.data() + offset, content_length );
 
-    return Message( sender_id, chat_id, time, message );
+    return Message( sender_id, chat_id, time, content );
 }
