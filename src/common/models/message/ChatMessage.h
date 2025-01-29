@@ -11,7 +11,7 @@ private:
 
 public:
     ChatMessage( int sender_id, int chat_id, std::time_t time, const std::string& content )
-        : Message( MessageType::Chat, sender_id, time, content ) {
+        : Message( MessageType::Chat, sender_id, time, content ), chat_id_( chat_id ) {
     }
 
     std::string to_string() {
@@ -49,6 +49,9 @@ public:
 
         std::memcpy( buffer.data() + offset, &sender_id, sizeof( sender_id ) );
         offset += sizeof( sender_id );
+
+        std::memcpy( buffer.data() + offset, &chat_id_, sizeof( chat_id_ ) );
+        offset += sizeof( chat_id_ );
 
         time_t time = get_time();
 
@@ -93,7 +96,7 @@ public:
         offset += sizeof( content_length );
 
 
-        std::string content;
+        std::string content( content_length, '\0' );
         std::memcpy( content.data(), buffer.data() + offset, content_length );
 
         return ChatMessage( sender_id, chat_id, time, content );
